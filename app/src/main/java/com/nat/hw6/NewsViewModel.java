@@ -21,8 +21,7 @@ public class NewsViewModel extends AndroidViewModel {
     private NewsRepository repository;
     private LiveData<List<NewsItem>> allNews;
     private LiveData<List<NewsItem>> allFavouritesNews;
-//    private Disposable disposableInsert;
-//    private Disposable disposableDelete;
+
 
     public NewsViewModel(@NonNull Application application) {
         super(application);
@@ -74,14 +73,4 @@ public class NewsViewModel extends AndroidViewModel {
         return allFavouritesNews;
     }
 
-//    @Override
-//    protected void onCleared() {
-//        super.onCleared();
-//        if (disposableInsert != null) {
-//            disposableInsert.dispose();
-//        }
-//        if (disposableDelete != null) {
-//            disposableDelete.dispose();
-//        }
-//    }
 }
