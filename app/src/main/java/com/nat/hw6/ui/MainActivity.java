@@ -3,7 +3,11 @@ package com.nat.hw6.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+
 import com.google.android.material.tabs.TabLayout;
 import com.nat.hw6.R;
 

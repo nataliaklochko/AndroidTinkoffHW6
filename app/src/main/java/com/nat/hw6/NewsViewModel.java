@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -20,6 +21,8 @@ public class NewsViewModel extends AndroidViewModel {
     private NewsRepository repository;
     private LiveData<List<NewsItem>> allNews;
     private LiveData<List<NewsItem>> allFavouritesNews;
+//    private Disposable disposableInsert;
+//    private Disposable disposableDelete;
 
     public NewsViewModel(@NonNull Application application) {
         super(application);
@@ -70,4 +73,15 @@ public class NewsViewModel extends AndroidViewModel {
     public LiveData<List<NewsItem>> getAllFavouritesNews () {
         return allFavouritesNews;
     }
+
+//    @Override
+//    protected void onCleared() {
+//        super.onCleared();
+//        if (disposableInsert != null) {
+//            disposableInsert.dispose();
+//        }
+//        if (disposableDelete != null) {
+//            disposableDelete.dispose();
+//        }
+//    }
 }

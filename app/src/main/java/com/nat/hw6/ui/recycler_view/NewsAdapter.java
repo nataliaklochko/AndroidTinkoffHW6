@@ -1,15 +1,11 @@
 package com.nat.hw6.ui.recycler_view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.nat.hw6.ui.NewsActivity;
-import com.nat.hw6.ui.NewsPageFragment;
-import com.nat.hw6.NewsViewModel;
 import com.nat.hw6.R;
 import com.nat.hw6.database.DateItem;
 import com.nat.hw6.database.NewsItem;
@@ -23,12 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    Context context;
     private ArrayList<Item> news = new ArrayList<Item>();
     private LinearLayout newsItem;
+    private NewsActivityCallback newsActivityCallback;
 
-    public NewsAdapter(Context context) {
-        this.context = context;
+    public NewsAdapter(NewsActivityCallback newsActivityCallback) {
+        this.newsActivityCallback = newsActivityCallback;
     }
 
     public void refreshData(ArrayList<Item> newData){
@@ -40,25 +36,20 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final Context context = parent.getContext();
         switch (viewType) {
             case Item.TYPE_NEWS: {
                 View view = LayoutInflater.from(context).inflate(R.layout.news, parent, false);
                 final NewsViewHolder newsViewHolder = new NewsViewHolder(view);
 
-                final NewsViewModel newsViewModel = NewsPageFragment.newsViewModel;
                 newsItem = newsViewHolder.newsItem;
-
                 newsItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, NewsActivity.class);
-
                         int pos = newsViewHolder.getAdapterPosition();
                         if (pos != RecyclerView.NO_POSITION) {
-                            NewsItem newsItemPos = (NewsItem) news.get(pos);
-
-                            intent.putExtra(NewsActivity.NEWS_TAG, news.get(pos));
-                            context.startActivity(intent);
+                            Item item = news.get(pos);
+                            newsActivityCallback.startNewsActivity(item);
                         }
                     }
                 });

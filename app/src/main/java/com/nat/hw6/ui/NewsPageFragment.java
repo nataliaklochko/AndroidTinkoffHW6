@@ -2,6 +2,7 @@ package com.nat.hw6.ui;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.nat.hw6.NewsViewModel;
 import com.nat.hw6.R;
 import com.nat.hw6.database.NewsItem;
 import com.nat.hw6.database.Item;
+import com.nat.hw6.ui.recycler_view.NewsActivityCallback;
 import com.nat.hw6.ui.recycler_view.NewsAdapter;
 import com.nat.hw6.ui.recycler_view.NewsItemDecoration;
 
@@ -34,7 +36,7 @@ public class NewsPageFragment extends Fragment {
     public static final String DEL_ARG = "del_arg";
     private static final String NEW_USER = "new_user_fragment";
 
-    public static NewsViewModel newsViewModel;
+    public NewsViewModel newsViewModel;
 
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
@@ -92,7 +94,15 @@ public class NewsPageFragment extends Fragment {
         );
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        newsAdapter = new NewsAdapter(getContext());
+        newsAdapter = new NewsAdapter(new NewsActivityCallback() {
+            @Override
+            public void startNewsActivity(Item item) {
+                Context context = getContext();
+                Intent intent = new Intent(context, NewsActivity.class);
+                intent.putExtra(NewsActivity.NEWS_TAG, item);
+                context.startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(newsAdapter);
 
         if (getArguments().getBoolean(DEL_ARG)) {
